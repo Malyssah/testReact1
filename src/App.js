@@ -13,7 +13,7 @@ class App extends React.Component {
 
   // A finir
   componentDidMount() {
-    fetch('localhost:5000/categories',  )
+    fetch('localhost:5000/categories',/***** autres paramètres */ )
     .then(res => res.json())// parse la réponse en JSON
     .then((resj) => {
       this.setState({ categories: resj.xxx })
