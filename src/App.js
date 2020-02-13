@@ -32,7 +32,7 @@ class App extends React.Component {
   };
 
   //Gerer l'ajout d'une categorie
-  handAdd = categorie => {
+  handleAdd = categorie => {
 	  fetch(  // fetch  url methode et header
 		  'http://localhost:5000/categories', {
 			  method: 'POST', 
