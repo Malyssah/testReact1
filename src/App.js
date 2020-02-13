@@ -1,4 +1,4 @@
-import React, { component } from "react";
+import React from "react";
 import Categorie from "./Categorie";
 import CategorieForm from "./CategorieForm";
 
@@ -13,10 +13,11 @@ class App extends React.Component {
 
   // A finir
   componentDidMount() {
-    fetch('localhost:5000/categories',/***** autres paramètres */ )
+    fetch('http://localhost:5000/categories'/*autres paramètres*/)
     .then(res => res.json())// parse la réponse en JSON
     .then((resj) => {
-      this.setState({ categories: resj.xxx })
+		console.log(resj)
+      this.setState({ categories: resj.data })
     })
     .catch(console.log)
   }
@@ -55,5 +56,4 @@ class App extends React.Component {
     );
   }
 }
-
 export default App;
