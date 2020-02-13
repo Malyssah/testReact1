@@ -2,7 +2,6 @@ import React from "react";
 import Categorie from "./Categorie";
 import CategorieForm from "./CategorieForm";
 
-// import logo from './logo.svg';
 import "./App.css";
 
 class App extends React.Component {
@@ -11,12 +10,13 @@ class App extends React.Component {
     count: 0
   };
 
-  // A finir
+  //Récupérer les données dans la base de donnée de node-rest-crud-API
+  //curl -X GET "http://127.0.0.1:8000/api/categories" -H  "accept: application/json"
   componentDidMount() {
-    fetch('http://localhost:5000/categories'/*autres paramètres*/)
-    .then(res => res.json())// parse la réponse en JSON
+	fetch('http://localhost:5000/categories')
+    .then(res => res.json())
     .then((resj) => {
-		console.log(resj)
+		//  console.log(resj)
       this.setState({ categories: resj.data })
     })
     .catch(console.log)
@@ -33,11 +33,16 @@ class App extends React.Component {
 
   //Gerer l'ajout d'une categorie
   handAdd = categorie => {
-    const categories = [...this.state.categories];
-    categorie.id = this.state.count;
-    this.setState ({count: this.state.count+1});
-    categories.push(categorie);
-    this.setState({ categories });
+	  fetch(  // fetch  url methode et header
+		  'http://localhost:5000/categories', {
+			  method: 'POST', 
+			  headers: "accept: application/json",
+			});
+		const categories = [...this.state.categories];
+		categorie.id = this.state.count;
+		this.setState ({count: this.state.count+1});
+		categories.push(categorie);
+		this.setState({ categories });
   };
 
   render() {
@@ -48,7 +53,7 @@ class App extends React.Component {
         <h1>{title}</h1>
         <ul>
           {this.state.categories.map(categorie => (
-            <Categorie details={categorie} onDelete={this.handleDelete} />
+            <Categorie key={categorie.id} details={categorie} onDelete={this.handleDelete} />
           ))}
         </ul>
         <CategorieForm onCategorieAdd={this.handAdd} />
