@@ -11,16 +11,6 @@ class App extends React.Component {
     count: 0
   };
 
-  // A finir
-  componentDidMount() {
-    fetch('localhost:5000/categories',  )
-    .then(res => res.json())// parse la réponse en JSON
-    .then((resj) => {
-      this.setState({ categories: resj.xxx })
-    })
-    .catch(console.log)
-  }
-
   //méthode Delete
   handleDelete = id => {
     const categories = [...this.state.categories];
