@@ -24,26 +24,40 @@ class App extends React.Component {
 
   //méthode Delete
   handleDelete = id => {
-    const categories = [...this.state.categories];
-    const index = categories.findIndex(categorie => categorie.id === id);
+	fetch(  
+		'http://localhost:5000/categories', {
+	 		method: 'POST', 
+			 headers: "accept: application/json",
+			 'Content-Type': 'application/json'
+		   });
+		   
+		const categories = [...this.state.categories];
+		const index = categories.findIndex(categorie => categorie.id === id);
 
-    categories.splice(index, 1);
-    this.setState({ categories });
+		categories.splice(index, 1);
+		this.setState({ categories });
   };
 
   //Gerer l'ajout d'une categorie
   handleAdd = categorie => {
-	  fetch(  // fetch  url methode et header
-		  'http://localhost:5000/categories', {
-			  method: 'POST', 
-			  headers: "accept: application/json",
-			});
-		const categories = [...this.state.categories];
-		categorie.id = this.state.count;
-		this.setState ({count: this.state.count+1});
+	  fetch(
+		'http://localhost:5000/categories', {
+			method: 'POST', 
+        	headers:{ "accept": "application/json",
+        	'Content-Type': 'application/json'
+      		},
+        	body: JSON.stringify({ categorie
+      		})
+      	}
+    )
+    .then(res => res.json())// parse la réponse en JSON
+    .then((resj) => {
+    const categories = [...this.state.categories];
+		categorie.id = resj.data.insertId;
 		categories.push(categorie);
 		this.setState({ categories });
-  };
+  })
+}
 
   render() {
     const title = "Liste des catégories";
@@ -56,7 +70,7 @@ class App extends React.Component {
             <Categorie key={categorie.id} details={categorie} onDelete={this.handleDelete} />
           ))}
         </ul>
-        <CategorieForm onCategorieAdd={this.handAdd} />
+        <CategorieForm onCategorieAdd={this.handleAdd} />
       </div>
     );
   }
