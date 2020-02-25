@@ -26,10 +26,12 @@ class App extends React.Component {
   handleDelete = id => {
 	fetch(  
 		'http://localhost:5000/categories', {
-	 		method: 'POST', 
-			 headers: "accept: application/json",
-			 'Content-Type': 'application/json'
-		   });
+	 		method: 'delete', 
+			 headers: {'accept': 'application/json',
+       'Content-Type': 'application/json'
+       },
+       body: JSON.stringify({categorie_id:id})
+      });
 		   
 		const categories = [...this.state.categories];
 		const index = categories.findIndex(categorie => categorie.id === id);
